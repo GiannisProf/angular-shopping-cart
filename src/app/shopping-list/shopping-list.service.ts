@@ -1,32 +1,37 @@
-import { EventEmitter, Injectable } from "@angular/core";
-import { Ingredient } from "../shared/ingredient.model";
+import { Ingredient } from '../shared/ingredient.model';
+import { EventEmitter } from '@angular/core';
 
-export class ShoppingListService{
+export class ShoppingListService {
+  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  private ingredients: Ingredient[] = [
+    new Ingredient('Apples', 5),
+    new Ingredient('Tomatoes', 10),
+  ];
 
-    ingredientsChanged = new EventEmitter<Ingredient[]>();
+  getIngredients() {
+    return this.ingredients.slice();
+  }
 
-    private ingredients: Ingredient[] = [
-        new Ingredient('Apples', 5),
-        new Ingredient('Tomatoes', 10),
-    ];
+  addIngredient(ingredient: Ingredient) {
+    this.ingredients.push(ingredient);
+    this.ingredientsChanged.emit(this.ingredients.slice());
+  }
 
-    getIngredients() {
-        return this.ingredients.slice(); //use .slice to return copy of the array, not the original 
-    }
+  removeIngredient() {
+    this.ingredients.pop();
+    this.ingredientsChanged.emit(this.ingredients.slice());
+  }
 
-    
-    addItem(ingredient : Ingredient){
-        this.ingredients.push(ingredient);
-        this.ingredientsChanged.emit(this.ingredients.slice())  
-    }
+  clearAll() {
+    this.ingredients = [];
+    this.ingredientsChanged.emit(this.ingredients.slice());
+  }
 
-    removeItem(){
-        this.ingredients.pop();
-        this.ingredientsChanged.emit(this.ingredients.slice())
-    }
-
-    clearShoppingList(){
-        this.ingredients = [];
-        this.ingredientsChanged.emit(this.ingredients.slice())
-    }
+  addIngredients(ingredients: Ingredient[]) {
+    // for (let ingredient of ingredients) {
+    //   this.addIngredient(ingredient);
+    // }
+    this.ingredients.push(...ingredients);
+    this.ingredientsChanged.emit(this.ingredients.slice());
+  }
 }
