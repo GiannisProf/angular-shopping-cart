@@ -1,7 +1,8 @@
 <a
-  href="#"
-  class="list-group-item clearfix"
-  (click)="onSelected()">
+  style="cursor: pointer"
+  class="list-group-item clearfix router"
+  [routerLink]="[index]"
+  routerLinkActive="active">
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
     <p class="list-group-item-text">{{ recipe.description }}</p>
@@ -14,3 +15,17 @@
           style="max-height: 50px;">
       </span>
 </a>
+
+<!--in the beginning of the a tag there was a
+href = "#" which caused the page to reload
+every time a recipe was clicked. This was removed
+to make the page not to send a request every time
+a recipe was clicked and was replaced with a style
+to change the cursor to indicate that the recipe is 
+still a link-->
+
+<!--bind routerlink to a relative path where i
+add the recipe id after the /recipes route-->
+
+<!--use routerlink = active to display the current
+recipe that is selected-->
